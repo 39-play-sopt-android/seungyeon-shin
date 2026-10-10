@@ -122,6 +122,9 @@ fun LoginScreen(
 
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    modifier = Modifier.clickable {
+                        registerLauncher.launch(Intent(context, RegisterActivity::class.java))
+                    },
                 ) {
                     Text(
                         text = "아직 계정이 없으신가요?",
@@ -132,9 +135,7 @@ fun LoginScreen(
                         text = "회원가입하기",
                         style = m14,
                         color = Gray6,
-                        modifier = Modifier.clickable {
-                            registerLauncher.launch(Intent(context, RegisterActivity::class.java))
-                        },
+
                     )
                 }
             }
