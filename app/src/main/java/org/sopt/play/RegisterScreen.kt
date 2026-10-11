@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.util.Patterns
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -45,74 +44,70 @@ fun RegisterScreen(
     val passwordError = if (password.isNotEmpty() && !isPasswordValid) "비밀번호는 6자 이상 입력해주세요." else null
     val passwordConfirmError = if (passwordConfirm.isNotEmpty() && !isPasswordMatch) "비밀번호와 동일하게 입력해주세요." else null
 
-    Box(
-        modifier = modifier.fillMaxSize(),
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(start = 16.dp, end = 16.dp, top = 60.dp),
+        verticalArrangement = Arrangement.spacedBy(40.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
+        Text(
+            text = "이메일로 회원가입",
+            style = b28,
+            color = Black,
+            modifier = Modifier.fillMaxWidth(),
+        )
+
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 16.dp, end = 16.dp, top = 60.dp),
-            verticalArrangement = Arrangement.spacedBy(40.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(32.dp),
         ) {
-            Text(
-                text = "이메일로 회원가입",
-                style = b28,
-                color = Black,
-                modifier = Modifier.fillMaxWidth(),
+            PlayTextField(
+                label = "이름",
+                value = name,
+                onValueChange = { name = it },
+                placeholder = "홍길동",
             )
 
-            Column(
-                verticalArrangement = Arrangement.spacedBy(32.dp),
-            ) {
-                PlayTextField(
-                    label = "이름",
-                    value = name,
-                    onValueChange = { name = it },
-                    placeholder = "홍길동",
-                )
+            PlayTextField(
+                label = "이메일 주소",
+                value = email,
+                onValueChange = { email = it },
+                placeholder = "abc@email.com",
+                errorMessage = emailError,
+            )
 
-                PlayTextField(
-                    label = "이메일 주소",
-                    value = email,
-                    onValueChange = { email = it },
-                    placeholder = "abc@email.com",
-                    errorMessage = emailError,
-                )
+            PlayTextField(
+                label = "비밀번호",
+                value = password,
+                onValueChange = { password = it },
+                placeholder = "6자 이상의 비밀번호",
+                errorMessage = passwordError,
+                isPassword = true,
+            )
 
-                PlayTextField(
-                    label = "비밀번호",
-                    value = password,
-                    onValueChange = { password = it },
-                    placeholder = "6자 이상의 비밀번호",
-                    errorMessage = passwordError,
-                    isPassword = true,
-                )
-
-                PlayTextField(
-                    label = "비밀번호 확인",
-                    value = passwordConfirm,
-                    onValueChange = { passwordConfirm = it },
-                    placeholder = "6자 이상의 비밀번호",
-                    errorMessage = passwordConfirmError,
-                    isPassword = true,
-                )
-            }
-
-            PlayButton(
-                text = "회원가입",
-                enabled = name.isNotBlank() && isEmailValid && isPasswordValid && isPasswordMatch,
-                onClick = {
-                    val resultIntent = Intent().apply {
-                        putExtra("email", email)
-                        putExtra("password", password)
-                    }
-                    val activity = context as Activity
-                    activity.setResult(Activity.RESULT_OK, resultIntent)
-                    activity.finish()
-                },
+            PlayTextField(
+                label = "비밀번호 확인",
+                value = passwordConfirm,
+                onValueChange = { passwordConfirm = it },
+                placeholder = "6자 이상의 비밀번호",
+                errorMessage = passwordConfirmError,
+                isPassword = true,
             )
         }
+
+        PlayButton(
+            text = "회원가입",
+            enabled = name.isNotBlank() && isEmailValid && isPasswordValid && isPasswordMatch,
+            onClick = {
+                val resultIntent = Intent().apply {
+                    putExtra(RegisterActivity.EXTRA_EMAIL, email)
+                    putExtra(RegisterActivity.EXTRA_PASSWORD, password)
+                }
+                val activity = context as Activity
+                activity.setResult(Activity.RESULT_OK, resultIntent)
+                activity.finish()
+            },
+        )
     }
 }
 

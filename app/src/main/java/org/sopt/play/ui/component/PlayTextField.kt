@@ -1,15 +1,22 @@
 package org.sopt.play.ui.component
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
@@ -34,6 +41,15 @@ fun PlayTextField(
     errorMessage: String? = null,
     isPassword: Boolean = false,
 ) {
+    val isError = errorMessage != null
+    val interactionSource = remember { MutableInteractionSource() }
+    val isFocused by interactionSource.collectIsFocusedAsState()
+    val borderColor = when {
+        isError -> Red
+        isFocused -> Gray5
+        else -> Gray2
+    }
+
     Column(
         modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(6.dp),
@@ -45,26 +61,29 @@ fun PlayTextField(
             modifier = Modifier.padding(start = 8.dp),
         )
 
-        OutlinedTextField(
+        BasicTextField(
             value = value,
             onValueChange = onValueChange,
             modifier = Modifier.fillMaxWidth(),
-            textStyle = m18,
-            placeholder = { Text(text = placeholder, style = m18, color = Gray2) },
-            isError = errorMessage != null,
+            textStyle = m18.copy(color = if (isError) Gray6 else Gray5),
+            singleLine = true,
             visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None,
-            shape = RoundedCornerShape(12.dp),
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedContainerColor = White,
-                unfocusedContainerColor = White,
-                errorContainerColor = White,
-                focusedBorderColor = Gray5,
-                unfocusedBorderColor = Gray2,
-                errorBorderColor = Red,
-                focusedTextColor = Gray5,
-                unfocusedTextColor = Gray5,
-                errorTextColor = Gray6,
-            ),
+            interactionSource = interactionSource,
+            cursorBrush = SolidColor(Gray5),
+            decorationBox = { innerTextField ->
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(White, RoundedCornerShape(12.dp))
+                        .border(2.dp, borderColor, RoundedCornerShape(12.dp))
+                        .padding(16.dp),
+                ) {
+                    if (value.isEmpty()) {
+                        Text(text = placeholder, style = m18, color = Gray2)
+                    }
+                    innerTextField()
+                }
+            },
         )
 
         if (errorMessage != null) {

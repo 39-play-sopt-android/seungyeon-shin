@@ -8,7 +8,6 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -57,87 +56,83 @@ fun LoginScreen(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
-            registeredEmail = result.data?.getStringExtra("email") ?: ""
-            registeredPassword = result.data?.getStringExtra("password") ?: ""
+            registeredEmail = result.data?.getStringExtra(RegisterActivity.EXTRA_EMAIL) ?: ""
+            registeredPassword = result.data?.getStringExtra(RegisterActivity.EXTRA_PASSWORD) ?: ""
         }
     }
 
-    Box(
-        modifier = modifier.fillMaxSize(),
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(start = 16.dp, end = 16.dp, top = 60.dp),
+        verticalArrangement = Arrangement.spacedBy(40.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
+        Text(
+            text = "이메일로 로그인하기",
+            style = b28,
+            color = Black,
+            modifier = Modifier.fillMaxWidth(),
+        )
+
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 16.dp, end = 16.dp, top = 60.dp),
-            verticalArrangement = Arrangement.spacedBy(40.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(32.dp),
         ) {
-            Text(
-                text = "이메일로 로그인하기",
-                style = b28,
-                color = Black,
-                modifier = Modifier.fillMaxWidth(),
+            PlayTextField(
+                label = "이메일 주소",
+                value = email,
+                onValueChange = { email = it },
+                placeholder = "abc@email.com",
+                errorMessage = emailError,
             )
 
-            Column(
-                verticalArrangement = Arrangement.spacedBy(32.dp),
+            PlayTextField(
+                label = "비밀번호",
+                value = password,
+                onValueChange = { password = it },
+                placeholder = "6자 이상의 비밀번호",
+                errorMessage = passwordError,
+                isPassword = true,
+            )
+        }
+
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+        ) {
+            PlayButton(
+                text = "로그인",
+                enabled = isEmailValid && isPasswordValid,
+                onClick = {
+                    if (email == registeredEmail && password == registeredPassword) {
+                        context.startActivity(Intent(context, MainActivity::class.java))
+                    } else {
+                        Toast.makeText(
+                            context,
+                            "이메일 또는 비밀번호가 올바르지 않아요.",
+                            Toast.LENGTH_SHORT,
+                        ).show()
+                    }
+                },
+            )
+
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                modifier = Modifier.clickable {
+                    registerLauncher.launch(Intent(context, RegisterActivity::class.java))
+                },
             ) {
-                PlayTextField(
-                    label = "이메일 주소",
-                    value = email,
-                    onValueChange = { email = it },
-                    placeholder = "abc@email.com",
-                    errorMessage = emailError,
+                Text(
+                    text = "아직 계정이 없으신가요?",
+                    style = m14,
+                    color = Gray3,
                 )
+                Text(
+                    text = "회원가입하기",
+                    style = m14,
+                    color = Gray6,
 
-                PlayTextField(
-                    label = "비밀번호",
-                    value = password,
-                    onValueChange = { password = it },
-                    placeholder = "6자 이상의 비밀번호",
-                    errorMessage = passwordError,
-                    isPassword = true,
                 )
-            }
-
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(20.dp),
-            ) {
-                PlayButton(
-                    text = "로그인",
-                    enabled = isEmailValid && isPasswordValid,
-                    onClick = {
-                        if (email == registeredEmail && password == registeredPassword) {
-                            context.startActivity(Intent(context, MainActivity::class.java))
-                        } else {
-                            Toast.makeText(
-                                context,
-                                "이메일 또는 비밀번호가 올바르지 않아요.",
-                                Toast.LENGTH_SHORT,
-                            ).show()
-                        }
-                    },
-                )
-
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(12.dp),
-                    modifier = Modifier.clickable {
-                        registerLauncher.launch(Intent(context, RegisterActivity::class.java))
-                    },
-                ) {
-                    Text(
-                        text = "아직 계정이 없으신가요?",
-                        style = m14,
-                        color = Gray3,
-                    )
-                    Text(
-                        text = "회원가입하기",
-                        style = m14,
-                        color = Gray6,
-
-                    )
-                }
             }
         }
     }

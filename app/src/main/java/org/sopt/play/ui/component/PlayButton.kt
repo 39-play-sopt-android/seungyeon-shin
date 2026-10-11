@@ -1,16 +1,20 @@
 package org.sopt.play.ui.component
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.sopt.play.ui.theme.Black
@@ -22,26 +26,28 @@ import org.sopt.play.ui.theme.sb14
 @Composable
 fun PlayButton(
     text: String,
-    enabled: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    enabled: Boolean = true,
 ) {
-    Button(
-        onClick = onClick,
-        enabled = enabled,
-        modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(100.dp),
-        contentPadding = PaddingValues(16.dp),
-        colors = ButtonDefaults.buttonColors(
-            containerColor = Black,
-            contentColor = Gray1,
-            disabledContainerColor = Gray1,
-            disabledContentColor = Gray3,
-        ),
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(100.dp))
+            .background(if (enabled) Black else Gray1)
+            .clickable(
+                enabled = enabled,
+                indication = null,
+                interactionSource = remember { MutableInteractionSource() },
+                onClick = onClick,
+            )
+            .padding(16.dp),
+        contentAlignment = Alignment.Center,
     ) {
         Text(
             text = text,
             style = sb14,
+            color = if (enabled) Gray1 else Gray3,
         )
     }
 }
@@ -55,7 +61,7 @@ private fun ButtonPreview() {
             verticalArrangement = Arrangement.spacedBy(32.dp),
         ) {
             PlayButton(text = "로그인", enabled = false, onClick = {})
-            PlayButton(text = "로그인", enabled = true, onClick = {})
+            PlayButton(text = "로그인", onClick = {})
         }
     }
 }

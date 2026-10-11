@@ -22,4 +22,9 @@ class RegisterActivity : ComponentActivity() {
             }
         }
     }
+
+    companion object {
+        const val EXTRA_EMAIL = "email"
+        const val EXTRA_PASSWORD = "password"
+    }
 }
