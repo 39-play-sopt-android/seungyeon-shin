@@ -1,12 +1,9 @@
 package org.sopt.play.ui.register
 
-import android.app.Activity
-import android.content.Intent
 import android.util.Patterns
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -14,9 +11,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.sopt.play.ui.component.PlayButton
@@ -27,10 +22,9 @@ import org.sopt.play.ui.theme.b28
 
 @Composable
 fun RegisterScreen(
+    onRegisterClick: (email: String, password: String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val context = LocalContext.current
-
     var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -49,13 +43,11 @@ fun RegisterScreen(
             .fillMaxSize()
             .padding(start = 16.dp, end = 16.dp, top = 60.dp),
         verticalArrangement = Arrangement.spacedBy(40.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
             text = "이메일로 회원가입",
             style = b28,
             color = Black,
-            modifier = Modifier.fillMaxWidth(),
         )
 
         Column(
@@ -98,15 +90,7 @@ fun RegisterScreen(
         PlayButton(
             text = "회원가입",
             enabled = name.isNotBlank() && isEmailValid && isPasswordValid && isPasswordMatch,
-            onClick = {
-                val resultIntent = Intent().apply {
-                    putExtra(RegisterActivity.EXTRA_EMAIL, email)
-                    putExtra(RegisterActivity.EXTRA_PASSWORD, password)
-                }
-                val activity = context as Activity
-                activity.setResult(Activity.RESULT_OK, resultIntent)
-                activity.finish()
-            },
+            onClick = { onRegisterClick(email, password) },
         )
     }
 }
@@ -115,6 +99,6 @@ fun RegisterScreen(
 @Composable
 private fun RegisterScreenPreview() {
     PlaySoptTheme {
-        RegisterScreen()
+        RegisterScreen(onRegisterClick = { _, _ -> })
     }
 }

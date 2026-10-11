@@ -1,5 +1,6 @@
 package org.sopt.play.ui.register
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -17,10 +18,22 @@ class RegisterActivity : ComponentActivity() {
         setContent {
             PlaySoptTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    RegisterScreen(modifier = Modifier.padding(innerPadding))
+                    RegisterScreen(
+                        onRegisterClick = ::finishWithResult,
+                        modifier = Modifier.padding(innerPadding),
+                    )
                 }
             }
         }
+    }
+
+    private fun finishWithResult(email: String, password: String) {
+        val resultIntent = Intent().apply {
+            putExtra(EXTRA_EMAIL, email)
+            putExtra(EXTRA_PASSWORD, password)
+        }
+        setResult(RESULT_OK, resultIntent)
+        finish()
     }
 
     companion object {
