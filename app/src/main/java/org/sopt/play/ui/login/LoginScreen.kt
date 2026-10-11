@@ -1,10 +1,15 @@
-package org.sopt.play
+package org.sopt.play.ui.login
 
 import android.app.Activity
 import android.content.Intent
 import android.util.Patterns
+import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -19,30 +24,44 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import org.sopt.play.MainActivity
 import org.sopt.play.ui.component.PlayButton
 import org.sopt.play.ui.component.PlayTextField
 import org.sopt.play.ui.theme.Black
 import org.sopt.play.ui.theme.PlaySoptTheme
+import org.sopt.play.ui.theme.Gray3
+import org.sopt.play.ui.theme.Gray6
 import org.sopt.play.ui.theme.b28
+import org.sopt.play.ui.theme.m14
+import org.sopt.play.ui.register.RegisterActivity
 
 @Composable
-fun RegisterScreen(
+fun LoginScreen(
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
 
-    var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-    var passwordConfirm by remember { mutableStateOf("") }
+
+    // 회원가입 화면에서 전달받은 계정 정보
+    var registeredEmail by remember { mutableStateOf("") }
+    var registeredPassword by remember { mutableStateOf("") }
 
     val isEmailValid = Patterns.EMAIL_ADDRESS.matcher(email).matches()
     val isPasswordValid = password.length >= 6
-    val isPasswordMatch = password == passwordConfirm
 
     val emailError = if (email.isNotEmpty() && !isEmailValid) "올바른 이메일을 입력해주세요." else null
     val passwordError = if (password.isNotEmpty() && !isPasswordValid) "비밀번호는 6자 이상 입력해주세요." else null
-    val passwordConfirmError = if (passwordConfirm.isNotEmpty() && !isPasswordMatch) "비밀번호와 동일하게 입력해주세요." else null
+
+    val registerLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            registeredEmail = result.data?.getStringExtra(RegisterActivity.EXTRA_EMAIL) ?: ""
+            registeredPassword = result.data?.getStringExtra(RegisterActivity.EXTRA_PASSWORD) ?: ""
+        }
+    }
 
     Column(
         modifier = modifier
@@ -52,7 +71,7 @@ fun RegisterScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
-            text = "이메일로 회원가입",
+            text = "이메일로 로그인하기",
             style = b28,
             color = Black,
             modifier = Modifier.fillMaxWidth(),
@@ -61,13 +80,6 @@ fun RegisterScreen(
         Column(
             verticalArrangement = Arrangement.spacedBy(32.dp),
         ) {
-            PlayTextField(
-                label = "이름",
-                value = name,
-                onValueChange = { name = it },
-                placeholder = "홍길동",
-            )
-
             PlayTextField(
                 label = "이메일 주소",
                 value = email,
@@ -84,37 +96,54 @@ fun RegisterScreen(
                 errorMessage = passwordError,
                 isPassword = true,
             )
-
-            PlayTextField(
-                label = "비밀번호 확인",
-                value = passwordConfirm,
-                onValueChange = { passwordConfirm = it },
-                placeholder = "6자 이상의 비밀번호",
-                errorMessage = passwordConfirmError,
-                isPassword = true,
-            )
         }
 
-        PlayButton(
-            text = "회원가입",
-            enabled = name.isNotBlank() && isEmailValid && isPasswordValid && isPasswordMatch,
-            onClick = {
-                val resultIntent = Intent().apply {
-                    putExtra(RegisterActivity.EXTRA_EMAIL, email)
-                    putExtra(RegisterActivity.EXTRA_PASSWORD, password)
-                }
-                val activity = context as Activity
-                activity.setResult(Activity.RESULT_OK, resultIntent)
-                activity.finish()
-            },
-        )
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+        ) {
+            PlayButton(
+                text = "로그인",
+                enabled = isEmailValid && isPasswordValid,
+                onClick = {
+                    if (email == registeredEmail && password == registeredPassword) {
+                        context.startActivity(Intent(context, MainActivity::class.java))
+                    } else {
+                        Toast.makeText(
+                            context,
+                            "이메일 또는 비밀번호가 올바르지 않아요.",
+                            Toast.LENGTH_SHORT,
+                        ).show()
+                    }
+                },
+            )
+
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                modifier = Modifier.clickable {
+                    registerLauncher.launch(Intent(context, RegisterActivity::class.java))
+                },
+            ) {
+                Text(
+                    text = "아직 계정이 없으신가요?",
+                    style = m14,
+                    color = Gray3,
+                )
+                Text(
+                    text = "회원가입하기",
+                    style = m14,
+                    color = Gray6,
+
+                )
+            }
+        }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-private fun RegisterScreenPreview() {
+private fun LoginScreenPreview() {
     PlaySoptTheme {
-        RegisterScreen()
+        LoginScreen()
     }
 }
