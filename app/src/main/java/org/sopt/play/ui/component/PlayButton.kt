@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,14 +20,13 @@ import org.sopt.play.ui.theme.Gray3
 import org.sopt.play.ui.theme.sb14
 
 @Composable
-fun Button(
+fun PlayButton(
     text: String,
     enabled: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    // 함수 이름이 같아서 material3 Button은 전체 이름으로 호출
-    androidx.compose.material3.Button(
+    Button(
         onClick = onClick,
         enabled = enabled,
         modifier = modifier.fillMaxWidth(),
@@ -54,8 +54,8 @@ private fun ButtonPreview() {
             modifier = Modifier.padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(32.dp),
         ) {
-            Button(text = "로그인", enabled = false, onClick = {})
-            Button(text = "로그인", enabled = true, onClick = {})
+            PlayButton(text = "로그인", enabled = false, onClick = {})
+            PlayButton(text = "로그인", enabled = true, onClick = {})
         }
     }
 }

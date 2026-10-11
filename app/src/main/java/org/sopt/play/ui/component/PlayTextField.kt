@@ -25,7 +25,7 @@ import org.sopt.play.ui.theme.m18
 import org.sopt.play.ui.theme.sb16
 
 @Composable
-fun TextField(
+fun PlayTextField(
     label: String,
     value: String,
     onValueChange: (String) -> Unit,
@@ -86,20 +86,20 @@ private fun TextFieldPreview() {
             modifier = Modifier.padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(32.dp),
         ) {
-            TextField(
+            PlayTextField(
                 label = "이메일 주소",
                 value = "",
                 onValueChange = {},
                 placeholder = "abc@email.com",
             )
-            TextField(
+            PlayTextField(
                 label = "이메일 주소",
                 value = "abc.com",
                 onValueChange = {},
                 placeholder = "abc@email.com",
                 errorMessage = "올바른 이메일을 입력해주세요.",
             )
-            TextField(
+            PlayTextField(
                 label = "비밀번호",
                 value = "123456",
                 onValueChange = {},

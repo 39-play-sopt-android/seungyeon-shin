@@ -25,8 +25,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import org.sopt.play.ui.component.Button
-import org.sopt.play.ui.component.TextField
+import org.sopt.play.ui.component.PlayButton
+import org.sopt.play.ui.component.PlayTextField
 import org.sopt.play.ui.theme.Black
 import org.sopt.play.ui.theme.PlaySoptTheme
 import org.sopt.play.ui.theme.Gray3
@@ -82,7 +82,7 @@ fun LoginScreen(
             Column(
                 verticalArrangement = Arrangement.spacedBy(32.dp),
             ) {
-                TextField(
+                PlayTextField(
                     label = "이메일 주소",
                     value = email,
                     onValueChange = { email = it },
@@ -90,7 +90,7 @@ fun LoginScreen(
                     errorMessage = emailError,
                 )
 
-                TextField(
+                PlayTextField(
                     label = "비밀번호",
                     value = password,
                     onValueChange = { password = it },
@@ -104,7 +104,7 @@ fun LoginScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(20.dp),
             ) {
-                Button(
+                PlayButton(
                     text = "로그인",
                     enabled = isEmailValid && isPasswordValid,
                     onClick = {

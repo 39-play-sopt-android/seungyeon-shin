@@ -20,8 +20,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import org.sopt.play.ui.component.Button
-import org.sopt.play.ui.component.TextField
+import org.sopt.play.ui.component.PlayButton
+import org.sopt.play.ui.component.PlayTextField
 import org.sopt.play.ui.theme.Black
 import org.sopt.play.ui.theme.PlaySoptTheme
 import org.sopt.play.ui.theme.b28
@@ -65,14 +65,14 @@ fun RegisterScreen(
             Column(
                 verticalArrangement = Arrangement.spacedBy(32.dp),
             ) {
-                TextField(
+                PlayTextField(
                     label = "이름",
                     value = name,
                     onValueChange = { name = it },
                     placeholder = "홍길동",
                 )
 
-                TextField(
+                PlayTextField(
                     label = "이메일 주소",
                     value = email,
                     onValueChange = { email = it },
@@ -80,7 +80,7 @@ fun RegisterScreen(
                     errorMessage = emailError,
                 )
 
-                TextField(
+                PlayTextField(
                     label = "비밀번호",
                     value = password,
                     onValueChange = { password = it },
@@ -89,7 +89,7 @@ fun RegisterScreen(
                     isPassword = true,
                 )
 
-                TextField(
+                PlayTextField(
                     label = "비밀번호 확인",
                     value = passwordConfirm,
                     onValueChange = { passwordConfirm = it },
@@ -99,7 +99,7 @@ fun RegisterScreen(
                 )
             }
 
-            Button(
+            PlayButton(
                 text = "회원가입",
                 enabled = name.isNotBlank() && isEmailValid && isPasswordValid && isPasswordMatch,
                 onClick = {
