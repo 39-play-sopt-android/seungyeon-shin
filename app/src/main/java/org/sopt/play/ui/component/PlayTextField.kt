@@ -41,11 +41,10 @@ fun PlayTextField(
     errorMessage: String? = null,
     isPassword: Boolean = false,
 ) {
-    val isError = errorMessage != null
     val interactionSource = remember { MutableInteractionSource() }
     val isFocused by interactionSource.collectIsFocusedAsState()
     val borderColor = when {
-        isError -> Red
+        !errorMessage.isNullOrBlank() -> Red
         isFocused -> Gray5
         else -> Gray2
     }
@@ -65,7 +64,7 @@ fun PlayTextField(
             value = value,
             onValueChange = onValueChange,
             modifier = Modifier.fillMaxWidth(),
-            textStyle = m18.copy(color = if (isError) Gray6 else Gray5),
+            textStyle = m18.copy(color = if (!errorMessage.isNullOrBlank()) Gray6 else Gray5),
             singleLine = true,
             visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None,
             interactionSource = interactionSource,
@@ -79,7 +78,11 @@ fun PlayTextField(
                         .padding(16.dp),
                 ) {
                     if (value.isEmpty()) {
-                        Text(text = placeholder, style = m18, color = Gray2)
+                        Text(
+                            text = placeholder,
+                            style = m18,
+                            color = Gray2,
+                        )
                     }
                     innerTextField()
                 }

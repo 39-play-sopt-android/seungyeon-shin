@@ -1,7 +1,6 @@
 package org.sopt.play.ui.login
 
 import android.util.Patterns
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -25,6 +24,7 @@ import org.sopt.play.ui.theme.Gray3
 import org.sopt.play.ui.theme.Gray6
 import org.sopt.play.ui.theme.b28
 import org.sopt.play.ui.theme.m14
+import org.sopt.play.util.noRippleClickable
 
 @Composable
 fun LoginScreen(
@@ -86,7 +86,7 @@ fun LoginScreen(
 
             Row(
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
-                modifier = Modifier.clickable { onRegisterClick() },
+                modifier = Modifier.noRippleClickable { onRegisterClick() },
             ) {
                 Text(
                     text = "아직 계정이 없으신가요?",
