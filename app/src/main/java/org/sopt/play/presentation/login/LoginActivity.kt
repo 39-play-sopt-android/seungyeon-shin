@@ -1,4 +1,4 @@
-package org.sopt.play.ui.login
+package org.sopt.play.presentation.login
 
 import android.app.Activity
 import android.content.Intent
@@ -13,7 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import org.sopt.play.MainActivity
-import org.sopt.play.ui.register.RegisterActivity
+import org.sopt.play.presentation.register.RegisterActivity
 import org.sopt.play.ui.theme.PlaySoptTheme
 
 class LoginActivity : ComponentActivity() {
