@@ -27,12 +27,12 @@ fun Menus(
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, widthDp = 720) // 프리뷰 폭 넓혀서 가로로 긴 것도 다 보이게
 @Composable
 private fun MenusPreview() {
     PlaySoptTheme {
         Menus(
-            menus = listOf("2배적립", "홈", "셀렉티드", "브랜드"),
+            menus = listOf("2배적립", "홈", "셀렉티드", "브랜드", "뷰티", "라이프", "랭킹"),
             selectedIndex = 1,
             onMenuClick = {},
         )
