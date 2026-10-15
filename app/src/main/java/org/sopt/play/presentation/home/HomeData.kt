@@ -16,9 +16,6 @@ data class Product(
 // 피그마 홈 화면에 있는 텍스트 그대로 가져온 더미 데이터
 val homeMenus = listOf("2배적립", "홈", "셀렉티드", "브랜드", "뷰티", "라이프", "랭킹")
 
-// 배너는 이미지 1장 돌려씀 (가로 스크롤 보이게 3개)
-val homeBanners = listOf(R.drawable.img_banner_1, R.drawable.img_banner_1, R.drawable.img_banner_1)
-
 val homeCategories = listOf("전체", "상의", "팬츠", "원피스", "아우터", "스커트", "슈즈", "가방", "이너웨어/잠옷", "폰꾸미기")
 
 // 이미지는 drawable에 넣은 거 R.drawable.이름 으로 연결 (파일명은 소문자/숫자/_ 만 됨)

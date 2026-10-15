@@ -4,18 +4,15 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,15 +20,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import org.sopt.play.ui.component.Chip
+import org.sopt.play.R
+import org.sopt.play.ui.component.Categories
+import org.sopt.play.ui.component.Menus
 import org.sopt.play.ui.component.ProductCard
-import org.sopt.play.ui.component.TabMenu
 import org.sopt.play.ui.component.TopBar
 import org.sopt.play.ui.theme.Black
 import org.sopt.play.ui.theme.PlaySoptTheme
@@ -58,33 +57,29 @@ fun HomeScreen(modifier: Modifier = Modifier) {
             horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             item(span = { GridItemSpan(maxLineSpan) }) {
-                LazyRow {
-                    itemsIndexed(homeMenus) { index, menu ->
-                        TabMenu(
-                            text = menu,
-                            selected = index == selectedMenu,
-                            onClick = { selectedMenu = index },
-                        )
-                    }
-                }
+                Menus(
+                    menus = homeMenus,
+                    selectedIndex = selectedMenu,
+                    onMenuClick = { selectedMenu = it }, // it = 누른 index
+                )
             }
 
+            // 배너 한 장 가운데 -> Box를 꽉 채우고 안에서 Center 정렬
             item(span = { GridItemSpan(maxLineSpan) }) {
-                LazyRow(
-                    contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp),
+                    contentAlignment = Alignment.Center,
                 ) {
-                    items(homeBanners) { bannerRes ->
-                        Image(
-                            painter = painterResource(bannerRes),
-                            contentDescription = "배너",
-                            contentScale = ContentScale.Crop,
-                            modifier = Modifier
-                                .width(328.dp)
-                                .height(195.dp)
-                                .clip(RoundedCornerShape(8.dp)),
-                        )
-                    }
+                    Image(
+                        painter = painterResource(R.drawable.img_banner_1),
+                        contentDescription = "배너",
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .size(width = 328.dp, height = 195.dp) // 피그마 크기 그대로
+                            .clip(RoundedCornerShape(8.dp)),
+                    )
                 }
             }
 
@@ -98,18 +93,12 @@ fun HomeScreen(modifier: Modifier = Modifier) {
             }
 
             item(span = { GridItemSpan(maxLineSpan) }) {
-                LazyRow(
-                    contentPadding = PaddingValues(start = 16.dp, end = 16.dp, bottom = 20.dp),
-                    horizontalArrangement = Arrangement.spacedBy(6.dp),
-                ) {
-                    itemsIndexed(homeCategories) { index, category ->
-                        Chip(
-                            text = category,
-                            selected = index == selectedCategory,
-                            onClick = { selectedCategory = index },
-                        )
-                    }
-                }
+                Categories(
+                    categories = homeCategories,
+                    selectedIndex = selectedCategory,
+                    onCategoryClick = { selectedCategory = it },
+                    modifier = Modifier.padding(bottom = 20.dp),
+                )
             }
 
             // 상품은 일반 칸 -> 2개씩 알아서 줄바꿈

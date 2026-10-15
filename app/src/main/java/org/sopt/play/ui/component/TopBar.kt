@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
@@ -29,8 +30,9 @@ fun TopBar(
     Row(
         modifier = modifier
             .fillMaxWidth()
+            .height(48.dp) // 피그마 탑바 높이
             .background(White)
-            .padding(start = 16.dp, end = 6.dp),
+            .padding(horizontal = 16.dp), // 좌우 16dp
         horizontalArrangement = Arrangement.SpaceBetween, // 양 끝으로 벌리기
         verticalAlignment = Alignment.CenterVertically, // 글자랑 아이콘 높이 달라서 세로 가운데 맞춤
     ) {
@@ -41,7 +43,6 @@ fun TopBar(
             contentDescription = "검색",
             tint = Black,
             modifier = Modifier
-                .padding(10.dp) // modifier 순서 중요: 여백 먼저 -> 그 안에 28dp 아이콘
                 .size(28.dp),
         )
     }
