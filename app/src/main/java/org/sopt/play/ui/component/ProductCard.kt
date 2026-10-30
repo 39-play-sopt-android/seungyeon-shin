@@ -111,32 +111,33 @@ fun ProductCard(
             }
         }
     }
+}
 
-    @Preview(showBackground = true)
-    @Composable
-    private fun ProductCardPreview() {
-        PlaySoptTheme {
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                ProductCard(
-                    storeName = "스토어명",
-                    productName = "상품명",
-                    discountRate = "49%",
-                    price = "29,370",
-                    isFavorite = false,
-                    onFavoriteClick = {},
-                    modifier = Modifier.width(160.dp),
-                    imageRes = R.drawable.img_product_1,
-                )
-                ProductCard(
-                    storeName = "스토어명이 아주 길어서 한 줄을 넘어가는 경우",
-                    productName = "상품명이 아주 길어서 한 줄을 넘어가는 경우",
-                    discountRate = "49%",
-                    price = "29,370",
-                    isFavorite = true,
-                    onFavoriteClick = {},
-                    imageRes = R.drawable.img_product_2,
-                    modifier = Modifier.width(160.dp),
-                )
-            }
+@Preview(showBackground = true)
+@Composable
+private fun ProductCardPreview() {
+    PlaySoptTheme {
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            ProductCard(
+                storeName = "스토어명",
+                productName = "상품명",
+                discountRate = "49%",
+                price = "29,370",
+                isFavorite = false,
+                onFavoriteClick = {},
+                modifier = Modifier.width(160.dp),
+                imageRes = R.drawable.img_product_1,
+            )
+            ProductCard(
+                storeName = "스토어명이 아주 길어서 한 줄을 넘어가는 경우",
+                productName = "상품명이 아주 길어서 한 줄을 넘어가는 경우",
+                discountRate = "49%",
+                price = "29,370",
+                isFavorite = true,
+                onFavoriteClick = {},
+                imageRes = R.drawable.img_product_2,
+                modifier = Modifier.width(160.dp),
+            )
         }
     }
+}
