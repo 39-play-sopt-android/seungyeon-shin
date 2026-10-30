@@ -1,4 +1,4 @@
-package org.sopt.play.ui.component
+package org.sopt.play.presentation.home.component
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
@@ -30,6 +30,8 @@ import org.sopt.play.ui.theme.PlaySoptTheme
 import org.sopt.play.ui.theme.Red
 import org.sopt.play.ui.theme.White
 import org.sopt.play.ui.theme.m14
+import org.sopt.play.ui.theme.r14
+import org.sopt.play.util.noRippleClickable
 
 /*
 - 위: 이미지 영역(160:200 비율), 오른쪽 아래에 하트
@@ -43,8 +45,9 @@ fun ProductCard(
     discountRate: String,
     price: String,
     isFavorite: Boolean,
+    onFavoriteClick: () -> Unit,
     modifier: Modifier = Modifier,
-    @DrawableRes imageRes: Int? = null, // 상품 이미지 (없으면 회색 박스)
+    @DrawableRes imageRes: Int, // 상품 이미지
 ) {
     Column(modifier = modifier) {
         // 이미지 위에 하트 겹쳐야 해서 Box (Box 안 자식들은 위로 쌓임)
@@ -53,37 +56,27 @@ fun ProductCard(
                 .fillMaxWidth()
                 .aspectRatio(160f / 200f), // 폭이 바뀌어도 160:200 비율 유지
         ) {
-            if (imageRes != null) {
-                Image(
-                    painter = painterResource(imageRes),
-                    contentDescription = productName,
-                    contentScale = ContentScale.Crop, // 비율 안 맞아도 꽉 채우고 넘치는 부분 자름
-                    modifier = Modifier.fillMaxSize(),
-                )
-            } else {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(Gray1),
-                )
-            }
-            // 하트: Icon + tint로 색 직접 지정 -> 선택이면 빨강, 아니면 흰색
-            // 40dp 박스(터치 영역) 가운데에 24dp 아이콘
-            Box(
+            Image(
+                painter = painterResource(imageRes),
+                contentDescription = productName,
+                contentScale = ContentScale.Crop, // 비율 안 맞아도 꽉 채우고 넘치는 부분 자름
+                modifier = Modifier.fillMaxSize(),
+            )
+
+            // 하트: 안쪽 Box 없이 Icon에 바로 align -> 구조 단순하게 (2주차 코리 반영)
+            val iconColor = if (isFavorite) Red else White
+            Icon(
+                painter = painterResource(
+                    if (isFavorite) R.drawable.ic_favorite_fill else R.drawable.ic_favorite,
+                ),
+                contentDescription = if (isFavorite) "좋아요 선택됨" else "좋아요 선택 안 됨",
                 modifier = Modifier
-                    .align(Alignment.BottomEnd) // Box 안에서 이것만 오른쪽 아래로
-                    .size(40.dp),
-                contentAlignment = Alignment.Center,
-            ) {
-                Icon(
-                    painter = painterResource(
-                        if (isFavorite) R.drawable.ic_favorite_fill else R.drawable.ic_favorite,
-                    ),
-                    contentDescription = if (isFavorite) "좋아요 선택됨" else "좋아요 선택 안 됨",
-                    modifier = Modifier.size(24.dp),
-                    tint = if (isFavorite) Red else White,
-                )
-            }
+                    .align(Alignment.BottomEnd)
+                    .noRippleClickable { onFavoriteClick() } // 클릭 -> 위로 이벤트만 올림
+                    .padding(8.dp) // 클릭 영역 40dp 유지 -> padding을 size보다 먼저!
+                    .size(24.dp),
+                tint = iconColor, //코드에서 플로랄 향기가 나도록~
+            )
         }
 
         Column(
@@ -97,17 +90,24 @@ fun ProductCard(
                 maxLines = 1, // 최대 한 줄
                 overflow = TextOverflow.Ellipsis, // 넘치면 … 처리
             )
-            // TODO: 피그마는 Regular(r14)인데 Regular 폰트가 없어서 일단 m14
             Text(
                 text = productName,
-                style = m14,
+                style = r14,
                 color = Black,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
             Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-                Text(text = discountRate, style = m14, color = Red)
-                Text(text = price, style = m14, color = Black)
+                Text(
+                    text = discountRate,
+                    style = m14,
+                    color = Red
+                )
+                Text(
+                    text = price,
+                    style = m14,
+                    color = Black
+                )
             }
         }
     }
@@ -124,6 +124,7 @@ private fun ProductCardPreview() {
                 discountRate = "49%",
                 price = "29,370",
                 isFavorite = false,
+                onFavoriteClick = {},
                 modifier = Modifier.width(160.dp),
                 imageRes = R.drawable.img_product_1,
             )
@@ -133,6 +134,8 @@ private fun ProductCardPreview() {
                 discountRate = "49%",
                 price = "29,370",
                 isFavorite = true,
+                onFavoriteClick = {},
+                imageRes = R.drawable.img_product_2,
                 modifier = Modifier.width(160.dp),
             )
         }

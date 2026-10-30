@@ -46,6 +46,8 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)  // viewModel() 쓰려고
+    implementation(libs.androidx.lifecycle.runtime.compose)    // collectAsStateWithLifecycle() 쓰려고
     implementation(libs.androidx.compose.navigation)
     testImplementation(libs.junit)
     androidTestImplementation(platform(libs.androidx.compose.bom))

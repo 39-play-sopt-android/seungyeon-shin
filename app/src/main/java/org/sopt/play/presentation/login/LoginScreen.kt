@@ -16,6 +16,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import org.sopt.play.ui.component.PlayButton
 import org.sopt.play.ui.component.PlayTextField
 import org.sopt.play.ui.theme.Black
@@ -27,13 +29,33 @@ import org.sopt.play.ui.theme.m14
 import org.sopt.play.util.noRippleClickable
 
 @Composable
+fun LoginRoute(
+    onLoginClick: (email: String, password: String) -> Unit,
+    onRegisterClick: () -> Unit,
+    viewModel: LoginViewModel = viewModel(),
+) {
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    LoginScreen(
+        email = uiState.email,
+        password = uiState.password,
+        onEmailChange = viewModel::onEmailChange,
+        onPasswordChange = viewModel::onPasswordChange,
+        onLoginClick = onLoginClick,
+        onRegisterClick = onRegisterClick,
+
+    )
+}
+@Composable
 fun LoginScreen(
+    email: String,
+    password: String,
+    onEmailChange: (String) -> Unit,
+    onPasswordChange: (String) -> Unit,
     onLoginClick: (email: String, password: String) -> Unit,
     onRegisterClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
+
 
     val isEmailValid = Patterns.EMAIL_ADDRESS.matcher(email).matches()
     val isPasswordValid = password.length >= 6
@@ -59,7 +81,7 @@ fun LoginScreen(
             PlayTextField(
                 label = "이메일 주소",
                 value = email,
-                onValueChange = { email = it },
+                onValueChange = onEmailChange,
                 placeholder = "abc@email.com",
                 errorMessage = emailError,
             )
@@ -67,7 +89,7 @@ fun LoginScreen(
             PlayTextField(
                 label = "비밀번호",
                 value = password,
-                onValueChange = { password = it },
+                onValueChange = onPasswordChange,
                 placeholder = "6자 이상의 비밀번호",
                 errorMessage = passwordError,
                 isPassword = true,
@@ -109,6 +131,10 @@ fun LoginScreen(
 private fun LoginScreenPreview() {
     PlaySoptTheme {
         LoginScreen(
+            email = "abc@email.com",
+            password = "",
+            onEmailChange = {},
+            onPasswordChange = {},
             onLoginClick = { _, _ -> },
             onRegisterClick = {},
         )
