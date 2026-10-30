@@ -1,4 +1,4 @@
-package org.sopt.play.ui.component
+package org.sopt.play.presentation.home.component
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
