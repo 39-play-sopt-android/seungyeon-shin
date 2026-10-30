@@ -18,6 +18,13 @@ val homeMenus = listOf("2배적립", "홈", "셀렉티드", "브랜드", "뷰티
 
 val homeCategories = listOf("전체", "상의", "팬츠", "원피스", "아우터", "스커트", "슈즈", "가방", "이너웨어/잠옷", "폰꾸미기")
 
+// 배너도 여러 장 가로로 넘겨야 해서 리스트로 뺌 -> 지금은 이미지 1장뿐이라 같은 거 반복함
+val homeBanners = listOf(
+    R.drawable.img_banner_1,
+    R.drawable.img_banner_1,
+    R.drawable.img_banner_1,
+)
+
 // 이미지는 drawable에 넣은 거 R.drawable.이름 으로 연결 (파일명은 소문자/숫자/_ 만 됨)
 val homeProducts = listOf(
     Product(
