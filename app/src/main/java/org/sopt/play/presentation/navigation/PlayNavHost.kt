@@ -11,9 +11,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import org.sopt.play.presentation.home.HomeScreen
-import org.sopt.play.presentation.login.LoginScreen
-import org.sopt.play.presentation.register.RegisterScreen
+import org.sopt.play.presentation.home.HomeRoute
+import org.sopt.play.presentation.login.LoginRoute
+import org.sopt.play.presentation.register.RegisterRoute
 
 @Composable
 fun PlayNavHost(modifier: Modifier = Modifier) {
@@ -31,7 +31,7 @@ fun PlayNavHost(modifier: Modifier = Modifier) {
         modifier = modifier,
     ) {
         composable(Route.LOGIN) {
-            LoginScreen(
+            LoginRoute(
                 onLoginClick = { email, password ->
                     // 로그인 성공 시 로그인 화면을 백스택에서 제거하고 홈으로 이동
                     if (email == registeredEmail && password == registeredPassword) {
@@ -46,16 +46,16 @@ fun PlayNavHost(modifier: Modifier = Modifier) {
             )
         }
         composable(Route.REGISTER) {
-            RegisterScreen(
-                onRegisterClick = { email, password ->
+            RegisterRoute(
+                onRegisterClick = { name, email, password, passwordConfirm ->
                     registeredEmail = email
                     registeredPassword = password
-                    navController.popBackStack() // 회원가입 화면 닫기 (기존 finish() 역할)
+                    navController.popBackStack() // 회원가입 화면 닫기 (기존 finish() 역할),
                 },
             )
         }
         composable(Route.HOME) {
-            HomeScreen()
+            HomeRoute()
         }
     }
 }
