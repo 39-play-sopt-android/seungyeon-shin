@@ -13,12 +13,14 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,6 +29,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import org.sopt.play.R
 import org.sopt.play.ui.component.Categories
 import org.sopt.play.ui.component.Menus
@@ -38,11 +42,23 @@ import org.sopt.play.ui.theme.White
 import org.sopt.play.ui.theme.sb16
 
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier) {
-    // 선택 상태는 Screen에서 관리 -> 컴포넌트엔 selected/onClick만 내려줌
-    var selectedMenu by remember { mutableIntStateOf(1) } // 기본 "홈"
-    var selectedCategory by remember { mutableIntStateOf(0) } // 기본 "전체"
-
+fun HomeRoute(viewModel: HomeViewModel = viewModel()) {
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    HomeScreen(
+        uiState = uiState,
+        onMenuClick = viewModel::onMenuClick,
+        onCategoryClick = viewModel::onCategoryClick,
+        onFavoriteClick = viewModel::onFavoriteClick,
+    )
+}
+@Composable
+fun HomeScreen(
+    uiState: HomeUiState = HomeUiState(),
+    onMenuClick: (Int) -> Unit = {},
+    onCategoryClick: (Int) -> Unit = {},
+    onFavoriteClick: (Int) -> Unit = {},
+    modifier: Modifier = Modifier
+) {
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -59,8 +75,8 @@ fun HomeScreen(modifier: Modifier = Modifier) {
             item(span = { GridItemSpan(maxLineSpan) }) {
                 Menus(
                     menus = homeMenus,
-                    selectedIndex = selectedMenu,
-                    onMenuClick = { selectedMenu = it }, // it = 누른 index
+                    selectedIndex = uiState.selectedMenu,
+                    onMenuClick = onMenuClick, // it = 누른 index
                 )
             }
 
@@ -95,14 +111,14 @@ fun HomeScreen(modifier: Modifier = Modifier) {
             item(span = { GridItemSpan(maxLineSpan) }) {
                 Categories(
                     categories = homeCategories,
-                    selectedIndex = selectedCategory,
-                    onCategoryClick = { selectedCategory = it },
+                    selectedIndex = uiState.selectedCategory,
+                    onCategoryClick = onCategoryClick,
                     modifier = Modifier.padding(bottom = 20.dp),
                 )
             }
 
-            // 상품은 일반 칸 -> 2개씩 알아서 줄바꿈
-            items(homeProducts) { product ->
+
+            itemsIndexed(uiState.products) { index, product ->
                 ProductCard(
                     storeName = product.storeName,
                     productName = product.productName,
@@ -110,6 +126,7 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                     price = product.price,
                     isFavorite = product.isFavorite,
                     imageRes = product.imageRes,
+                    onFavoriteClick = { onFavoriteClick(index) },
                 )
             }
         }
