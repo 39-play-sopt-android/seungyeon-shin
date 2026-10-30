@@ -10,7 +10,7 @@ data class Product(
     val discountRate: String,
     val price: String,
     val isFavorite: Boolean,
-    @DrawableRes val imageRes: Int? = null,
+    @DrawableRes val imageRes: Int,
 )
 
 // 피그마 홈 화면에 있는 텍스트 그대로 가져온 더미 데이터

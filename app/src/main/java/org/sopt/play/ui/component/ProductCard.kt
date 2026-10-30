@@ -30,6 +30,7 @@ import org.sopt.play.ui.theme.PlaySoptTheme
 import org.sopt.play.ui.theme.Red
 import org.sopt.play.ui.theme.White
 import org.sopt.play.ui.theme.m14
+import org.sopt.play.ui.theme.r14
 import org.sopt.play.util.noRippleClickable
 
 /*
@@ -46,7 +47,7 @@ fun ProductCard(
     isFavorite: Boolean,
     onFavoriteClick: () -> Unit,
     modifier: Modifier = Modifier,
-    @DrawableRes imageRes: Int? = null, // 상품 이미지 (없으면 회색 박스)
+    @DrawableRes imageRes: Int, // 상품 이미지
 ) {
     Column(modifier = modifier) {
         // 이미지 위에 하트 겹쳐야 해서 Box (Box 안 자식들은 위로 쌓임)
@@ -55,20 +56,13 @@ fun ProductCard(
                 .fillMaxWidth()
                 .aspectRatio(160f / 200f), // 폭이 바뀌어도 160:200 비율 유지
         ) {
-            if (imageRes != null) {
-                Image(
-                    painter = painterResource(imageRes),
-                    contentDescription = productName,
-                    contentScale = ContentScale.Crop, // 비율 안 맞아도 꽉 채우고 넘치는 부분 자름
-                    modifier = Modifier.fillMaxSize(),
-                )
-            } else {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(Gray1),
-                )
-            }
+            Image(
+                painter = painterResource(imageRes),
+                contentDescription = productName,
+                contentScale = ContentScale.Crop, // 비율 안 맞아도 꽉 채우고 넘치는 부분 자름
+                modifier = Modifier.fillMaxSize(),
+            )
+
             // 하트: 안쪽 Box 없이 Icon에 바로 align -> 구조 단순하게 (2주차 코리 반영)
             val iconColor = if (isFavorite) Red else White
             Icon(
@@ -81,7 +75,7 @@ fun ProductCard(
                     .noRippleClickable { onFavoriteClick() } // 클릭 -> 위로 이벤트만 올림
                     .padding(8.dp) // 클릭 영역 40dp 유지 -> padding을 size보다 먼저!
                     .size(24.dp),
-                tint = iconColor,
+                tint = iconColor, //코드에서 플로랄 향기가 나도록~
             )
         }
 
@@ -96,10 +90,9 @@ fun ProductCard(
                 maxLines = 1, // 최대 한 줄
                 overflow = TextOverflow.Ellipsis, // 넘치면 … 처리
             )
-            // TODO: 피그마는 Regular(r14)인데 Regular 폰트가 없어서 일단 m14
             Text(
                 text = productName,
-                style = m14,
+                style = r14,
                 color = Black,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
@@ -118,32 +111,32 @@ fun ProductCard(
             }
         }
     }
-}
 
-@Preview(showBackground = true)
-@Composable
-private fun ProductCardPreview() {
-    PlaySoptTheme {
-        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            ProductCard(
-                storeName = "스토어명",
-                productName = "상품명",
-                discountRate = "49%",
-                price = "29,370",
-                isFavorite = false,
-                onFavoriteClick = {},
-                modifier = Modifier.width(160.dp),
-                imageRes = R.drawable.img_product_1,
-            )
-            ProductCard(
-                storeName = "스토어명이 아주 길어서 한 줄을 넘어가는 경우",
-                productName = "상품명이 아주 길어서 한 줄을 넘어가는 경우",
-                discountRate = "49%",
-                price = "29,370",
-                isFavorite = true,
-                onFavoriteClick = {},
-                modifier = Modifier.width(160.dp),
-            )
+    @Preview(showBackground = true)
+    @Composable
+    private fun ProductCardPreview() {
+        PlaySoptTheme {
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                ProductCard(
+                    storeName = "스토어명",
+                    productName = "상품명",
+                    discountRate = "49%",
+                    price = "29,370",
+                    isFavorite = false,
+                    onFavoriteClick = {},
+                    modifier = Modifier.width(160.dp),
+                    imageRes = R.drawable.img_product_1,
+                )
+                ProductCard(
+                    storeName = "스토어명이 아주 길어서 한 줄을 넘어가는 경우",
+                    productName = "상품명이 아주 길어서 한 줄을 넘어가는 경우",
+                    discountRate = "49%",
+                    price = "29,370",
+                    isFavorite = true,
+                    onFavoriteClick = {},
+                    imageRes = R.drawable.img_product_2,
+                    modifier = Modifier.width(160.dp),
+                )
+            }
         }
     }
-}

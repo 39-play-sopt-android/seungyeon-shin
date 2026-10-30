@@ -13,6 +13,7 @@ val Pretendard = FontFamily(
     Font(R.font.pretendard_bold, FontWeight.Bold),
     Font(R.font.pretendard_medium, FontWeight.Medium),
     Font(R.font.pretendard_semibold, FontWeight.SemiBold),
+    Font(R.font.pretendard_regular, FontWeight.Normal),
 )
 
 // 행간 120%, 자간 -1%
@@ -46,6 +47,14 @@ val m14 = TextStyle(
     lineHeight = 1.2.em,
     letterSpacing = (-0.01).em,
     fontWeight = FontWeight.Medium,
+)
+
+val r14 = TextStyle(
+    fontFamily = Pretendard,
+    fontSize = 14.sp,
+    lineHeight = 1.2.em,
+    letterSpacing = (-0.01).em,
+    fontWeight = FontWeight.Normal,
 )
 
 val sb14 = TextStyle(
