@@ -105,8 +105,16 @@ fun ProductCard(
                 overflow = TextOverflow.Ellipsis,
             )
             Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-                Text(text = discountRate, style = m14, color = Red)
-                Text(text = price, style = m14, color = Black)
+                Text(
+                    text = discountRate,
+                    style = m14,
+                    color = Red
+                )
+                Text(
+                    text = price,
+                    style = m14,
+                    color = Black
+                )
             }
         }
     }
