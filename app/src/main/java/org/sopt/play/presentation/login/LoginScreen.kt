@@ -1,6 +1,5 @@
 package org.sopt.play.presentation.login
 
-import android.util.Patterns
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -9,23 +8,20 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import org.sopt.play.core.designsystem.theme.Black
+import org.sopt.play.core.designsystem.theme.Gray3
+import org.sopt.play.core.designsystem.theme.Gray6
+import org.sopt.play.core.designsystem.theme.PlaySoptTheme
+import org.sopt.play.core.designsystem.theme.b28
+import org.sopt.play.core.designsystem.theme.m14
 import org.sopt.play.ui.component.PlayButton
 import org.sopt.play.ui.component.PlayTextField
-import org.sopt.play.ui.theme.Black
-import org.sopt.play.ui.theme.PlaySoptTheme
-import org.sopt.play.ui.theme.Gray3
-import org.sopt.play.ui.theme.Gray6
-import org.sopt.play.ui.theme.b28
-import org.sopt.play.ui.theme.m14
 import org.sopt.play.util.noRippleClickable
 
 @Composable
@@ -38,17 +34,22 @@ fun LoginRoute(
     LoginScreen(
         email = uiState.email,
         password = uiState.password,
+        isEmailValid = uiState.isEmailValid,
+        isPasswordValid = uiState.isPasswordValid,
         onEmailChange = viewModel::onEmailChange,
         onPasswordChange = viewModel::onPasswordChange,
         onLoginClick = onLoginClick,
         onRegisterClick = onRegisterClick,
 
-    )
+        )
 }
+
 @Composable
 fun LoginScreen(
     email: String,
     password: String,
+    isEmailValid: Boolean,
+    isPasswordValid: Boolean,
     onEmailChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
     onLoginClick: (email: String, password: String) -> Unit,
@@ -57,11 +58,9 @@ fun LoginScreen(
 ) {
 
 
-    val isEmailValid = Patterns.EMAIL_ADDRESS.matcher(email).matches()
-    val isPasswordValid = password.length >= 6
-
     val emailError = if (email.isNotEmpty() && !isEmailValid) "올바른 이메일을 입력해주세요." else null
-    val passwordError = if (password.isNotEmpty() && !isPasswordValid) "비밀번호는 6자 이상 입력해주세요." else null
+    val passwordError =
+        if (password.isNotEmpty() && !isPasswordValid) "비밀번호는 6자 이상 입력해주세요." else null
 
     Column(
         modifier = modifier
@@ -120,7 +119,7 @@ fun LoginScreen(
                     style = m14,
                     color = Gray6,
 
-                )
+                    )
             }
         }
     }
@@ -133,6 +132,8 @@ private fun LoginScreenPreview() {
         LoginScreen(
             email = "abc@email.com",
             password = "",
+            isEmailValid = false,
+            isPasswordValid = false,
             onEmailChange = {},
             onPasswordChange = {},
             onLoginClick = { _, _ -> },
