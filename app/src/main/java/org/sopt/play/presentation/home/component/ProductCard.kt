@@ -2,7 +2,6 @@ package org.sopt.play.presentation.home.component
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,13 +23,12 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.sopt.play.R
-import org.sopt.play.ui.theme.Black
-import org.sopt.play.ui.theme.Gray1
-import org.sopt.play.ui.theme.PlaySoptTheme
-import org.sopt.play.ui.theme.Red
-import org.sopt.play.ui.theme.White
-import org.sopt.play.ui.theme.m14
-import org.sopt.play.ui.theme.r14
+import org.sopt.play.core.designsystem.theme.Black
+import org.sopt.play.core.designsystem.theme.PlaySoptTheme
+import org.sopt.play.core.designsystem.theme.Red
+import org.sopt.play.core.designsystem.theme.White
+import org.sopt.play.core.designsystem.theme.m14
+import org.sopt.play.core.designsystem.theme.r14
 import org.sopt.play.util.noRippleClickable
 
 /*

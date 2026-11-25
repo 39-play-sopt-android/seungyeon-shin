@@ -21,15 +21,15 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import org.sopt.play.ui.theme.PlaySoptTheme
-import org.sopt.play.ui.theme.Gray2
-import org.sopt.play.ui.theme.Gray5
-import org.sopt.play.ui.theme.Gray6
-import org.sopt.play.ui.theme.Red
-import org.sopt.play.ui.theme.White
-import org.sopt.play.ui.theme.m14
-import org.sopt.play.ui.theme.m18
-import org.sopt.play.ui.theme.sb16
+import org.sopt.play.core.designsystem.theme.Gray2
+import org.sopt.play.core.designsystem.theme.Gray5
+import org.sopt.play.core.designsystem.theme.Gray6
+import org.sopt.play.core.designsystem.theme.PlaySoptTheme
+import org.sopt.play.core.designsystem.theme.Red
+import org.sopt.play.core.designsystem.theme.White
+import org.sopt.play.core.designsystem.theme.m14
+import org.sopt.play.core.designsystem.theme.m18
+import org.sopt.play.core.designsystem.theme.sb16
 
 @Composable
 fun PlayTextField(

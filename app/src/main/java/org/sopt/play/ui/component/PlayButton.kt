@@ -14,11 +14,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import org.sopt.play.ui.theme.Black
-import org.sopt.play.ui.theme.PlaySoptTheme
-import org.sopt.play.ui.theme.Gray1
-import org.sopt.play.ui.theme.Gray3
-import org.sopt.play.ui.theme.sb14
+import org.sopt.play.core.designsystem.theme.Black
+import org.sopt.play.core.designsystem.theme.Gray1
+import org.sopt.play.core.designsystem.theme.Gray3
+import org.sopt.play.core.designsystem.theme.PlaySoptTheme
+import org.sopt.play.core.designsystem.theme.sb14
 import org.sopt.play.util.noRippleClickable
 
 @Composable

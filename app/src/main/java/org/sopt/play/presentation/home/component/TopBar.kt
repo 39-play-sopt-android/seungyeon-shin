@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
@@ -16,10 +15,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.sopt.play.R
-import org.sopt.play.ui.theme.Black
-import org.sopt.play.ui.theme.PlaySoptTheme
-import org.sopt.play.ui.theme.White
-import org.sopt.play.ui.theme.b28
+import org.sopt.play.core.designsystem.theme.Black
+import org.sopt.play.core.designsystem.theme.PlaySoptTheme
+import org.sopt.play.core.designsystem.theme.White
+import org.sopt.play.core.designsystem.theme.b28
 
 // 왼쪽 로고 + 오른쪽 검색 아이콘 가로로 나란히 -> Row
 // 클릭이나 선택 상태 없어서 파라미터는 modifier 하나

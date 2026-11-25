@@ -5,24 +5,19 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.itemsIndexed
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
@@ -35,10 +30,10 @@ import org.sopt.play.presentation.home.component.Categories
 import org.sopt.play.presentation.home.component.Menus
 import org.sopt.play.presentation.home.component.ProductCard
 import org.sopt.play.presentation.home.component.TopBar
-import org.sopt.play.ui.theme.Black
-import org.sopt.play.ui.theme.PlaySoptTheme
-import org.sopt.play.ui.theme.White
-import org.sopt.play.ui.theme.sb16
+import org.sopt.play.core.designsystem.theme.Black
+import org.sopt.play.core.designsystem.theme.PlaySoptTheme
+import org.sopt.play.core.designsystem.theme.White
+import org.sopt.play.core.designsystem.theme.sb16
 
 @Composable
 fun HomeRoute(viewModel: HomeViewModel = viewModel()) {
@@ -50,6 +45,7 @@ fun HomeRoute(viewModel: HomeViewModel = viewModel()) {
         onFavoriteClick = viewModel::onFavoriteClick,
     )
 }
+
 @Composable
 fun HomeScreen(
     uiState: HomeUiState = HomeUiState(),
@@ -83,7 +79,9 @@ fun HomeScreen(
             // 배너: Box는 고정이라 스크롤 안 됨 -> 좌우로 넘기려고 LazyRow (2주차 코리 반영)
             item(span = { GridItemSpan(maxLineSpan) }) {
                 LazyRow(
-                    contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp), // 첫/끝 배너 여백 (스크롤하면 같이 움직임)
+                    contentPadding = PaddingValues(
+                        horizontal = 16.dp, vertical = 8.dp
+                    ), // 첫/끝 배너 여백 (스크롤하면 같이 움직임)
                     horizontalArrangement = Arrangement.spacedBy(8.dp), // 배너 사이 간격
                 ) {
                     items(homeBanners) { bannerRes ->

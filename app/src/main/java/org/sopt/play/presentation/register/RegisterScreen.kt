@@ -10,21 +10,16 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import org.sopt.play.presentation.login.LoginScreen
-import org.sopt.play.presentation.login.LoginViewModel
 import org.sopt.play.ui.component.PlayButton
 import org.sopt.play.ui.component.PlayTextField
-import org.sopt.play.ui.theme.Black
-import org.sopt.play.ui.theme.PlaySoptTheme
-import org.sopt.play.ui.theme.b28
+import org.sopt.play.core.designsystem.theme.Black
+import org.sopt.play.core.designsystem.theme.PlaySoptTheme
+import org.sopt.play.core.designsystem.theme.b28
 
 @Composable
 fun RegisterRoute(

@@ -5,7 +5,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import org.sopt.play.ui.theme.PlaySoptTheme
+import org.sopt.play.core.designsystem.theme.PlaySoptTheme
 
 // TabMenu 여러 개 가로로 모은 거 (피그마 "Menus")
 // 선택된 index만 받고, 누르면 index 올려보냄 -> 상태는 HomeScreen이 가짐

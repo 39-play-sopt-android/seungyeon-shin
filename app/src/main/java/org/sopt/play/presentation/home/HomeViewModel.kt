@@ -19,11 +19,11 @@ class HomeViewModel : ViewModel() {
     }
 
     // 누른 상품만 isFavorite 뒤집기 -> 나머지는 그대로
-    fun onFavoriteClick(index: Int) {
+    fun onFavoriteClick(productId: Long) {
         _uiState.update { state ->
             state.copy(
-                products = state.products.mapIndexed { i, product ->
-                    if (i == index) product.copy(isFavorite = !product.isFavorite) else product
+                products = state.products.map { product ->
+                    if (product.id == productId) product.copy(isFavorite = !product.isFavorite) else product
                 },
             )
         }
