@@ -15,20 +15,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import org.sopt.play.ui.component.PlayButton
-import org.sopt.play.ui.component.PlayTextField
 import org.sopt.play.core.designsystem.theme.Black
 import org.sopt.play.core.designsystem.theme.PlaySoptTheme
 import org.sopt.play.core.designsystem.theme.b28
+import org.sopt.play.ui.component.PlayButton
+import org.sopt.play.ui.component.PlayTextField
 
 @Composable
 fun RegisterRoute(
-    onRegisterClick: (name: String, email: String, password: String, passwordConfirm: String) -> Unit,
+    onRegisterClick: (email: String, password: String) -> Unit,
     viewModel: RegisterViewModel = viewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     RegisterScreen(
-        name = uiState.name,
         email = uiState.email,
         password = uiState.password,
         passwordConfirm = uiState.passwordConfirm,
@@ -37,9 +36,9 @@ fun RegisterRoute(
         onPasswordChange = viewModel::onPasswordChange,
         onPasswordConfirmChange = viewModel::onPasswordConfirmChange,
         onRegisterClick = onRegisterClick,
-
-        )
+    )
 }
+
 @Composable
 fun RegisterScreen(
     name: String,
@@ -50,7 +49,7 @@ fun RegisterScreen(
     onEmailChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
     onPasswordConfirmChange: (String) -> Unit,
-    onRegisterClick: (name: String, email: String, password: String, passwordConfirm: String) -> Unit,
+    onRegisterClick: (email: String, password: String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
 
@@ -59,8 +58,10 @@ fun RegisterScreen(
     val isPasswordMatch = password == passwordConfirm
 
     val emailError = if (email.isNotEmpty() && !isEmailValid) "올바른 이메일을 입력해주세요." else null
-    val passwordError = if (password.isNotEmpty() && !isPasswordValid) "비밀번호는 6자 이상 입력해주세요." else null
-    val passwordConfirmError = if (passwordConfirm.isNotEmpty() && !isPasswordMatch) "비밀번호와 동일하게 입력해주세요." else null
+    val passwordError =
+        if (password.isNotEmpty() && !isPasswordValid) "비밀번호는 6자 이상 입력해주세요." else null
+    val passwordConfirmError =
+        if (passwordConfirm.isNotEmpty() && !isPasswordMatch) "비밀번호와 동일하게 입력해주세요." else null
 
     Column(
         modifier = modifier
@@ -115,7 +116,7 @@ fun RegisterScreen(
         PlayButton(
             text = "회원가입",
             enabled = name.isNotBlank() && isEmailValid && isPasswordValid && isPasswordMatch,
-            onClick = { onRegisterClick(name,email, password, passwordConfirm) },
+            onClick = { onRegisterClick(email, password) },
         )
     }
 }
@@ -133,5 +134,6 @@ private fun RegisterScreenPreview() {
             onEmailChange = {},
             onPasswordChange = {},
             onPasswordConfirmChange = {},
-            onRegisterClick = { _, _, _, _ -> } )}
+            onRegisterClick = { _, _ -> })
+    }
 }

@@ -47,7 +47,7 @@ fun PlayNavHost(modifier: Modifier = Modifier) {
         }
         composable(Route.REGISTER) {
             RegisterRoute(
-                onRegisterClick = { name, email, password, passwordConfirm ->
+                onRegisterClick = { email, password ->
                     registeredEmail = email
                     registeredPassword = password
                     navController.popBackStack() // 회원가입 화면 닫기 (기존 finish() 역할),
