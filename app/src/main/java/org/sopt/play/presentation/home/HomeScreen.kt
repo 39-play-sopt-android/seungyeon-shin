@@ -11,8 +11,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.itemsIndexed
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -26,14 +25,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import org.sopt.play.presentation.home.component.Categories
-import org.sopt.play.presentation.home.component.Menus
-import org.sopt.play.presentation.home.component.ProductCard
-import org.sopt.play.presentation.home.component.TopBar
 import org.sopt.play.core.designsystem.theme.Black
 import org.sopt.play.core.designsystem.theme.PlaySoptTheme
 import org.sopt.play.core.designsystem.theme.White
 import org.sopt.play.core.designsystem.theme.sb16
+import org.sopt.play.presentation.home.component.Categories
+import org.sopt.play.presentation.home.component.Menus
+import org.sopt.play.presentation.home.component.ProductCard
+import org.sopt.play.presentation.home.component.TopBar
 
 @Composable
 fun HomeRoute(viewModel: HomeViewModel = viewModel()) {
@@ -51,7 +50,7 @@ fun HomeScreen(
     uiState: HomeUiState = HomeUiState(),
     onMenuClick: (Int) -> Unit = {},
     onCategoryClick: (Int) -> Unit = {},
-    onFavoriteClick: (Int) -> Unit = {},
+    onFavoriteClick: (Long) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     // Column 대신 Scaffold -> topBar 자리에 TopBar 꽂으면 알아서 위에 고정됨 (2주차 코리 반영)
@@ -115,8 +114,7 @@ fun HomeScreen(
                 )
             }
 
-
-            itemsIndexed(uiState.products) { index, product ->
+            items(uiState.products) { product ->
                 ProductCard(
                     storeName = product.storeName,
                     productName = product.productName,
@@ -124,7 +122,7 @@ fun HomeScreen(
                     price = product.price,
                     isFavorite = product.isFavorite,
                     imageRes = product.imageRes,
-                    onFavoriteClick = { onFavoriteClick(index) },
+                    onFavoriteClick = { onFavoriteClick(product.id) },
                 )
             }
         }
