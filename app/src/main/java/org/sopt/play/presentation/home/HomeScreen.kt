@@ -12,6 +12,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -47,11 +48,11 @@ fun HomeRoute(viewModel: HomeViewModel = viewModel()) {
 
 @Composable
 fun HomeScreen(
+    modifier: Modifier = Modifier,
     uiState: HomeUiState = HomeUiState(),
     onMenuClick: (Int) -> Unit = {},
     onCategoryClick: (Int) -> Unit = {},
     onFavoriteClick: (Long) -> Unit = {},
-    modifier: Modifier = Modifier
 ) {
     // Column 대신 Scaffold -> topBar 자리에 TopBar 꽂으면 알아서 위에 고정됨 (2주차 코리 반영)
     // 나중에 bottomBar도 같은 방식으로 붙이면 됨
