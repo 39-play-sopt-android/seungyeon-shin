@@ -1,4 +1,4 @@
-package org.sopt.play.ui.component
+package org.sopt.play.presentation.home.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -30,9 +30,8 @@ fun TopBar(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .height(48.dp) // 피그마 탑바 높이
             .background(White)
-            .padding(horizontal = 16.dp), // 좌우 16dp
+            .padding(start = 16.dp, end=6.dp),
         horizontalArrangement = Arrangement.SpaceBetween, // 양 끝으로 벌리기
         verticalAlignment = Alignment.CenterVertically, // 글자랑 아이콘 높이 달라서 세로 가운데 맞춤
     ) {
@@ -43,6 +42,7 @@ fun TopBar(
             contentDescription = "검색",
             tint = Black,
             modifier = Modifier
+                .padding(10.dp)
                 .size(28.dp),
         )
     }

@@ -1,4 +1,4 @@
-package org.sopt.play.ui.component
+package org.sopt.play.presentation.home.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -33,12 +33,12 @@ fun Categories(
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, widthDp = 720) // 프리뷰 폭 넓혀서 가로로 긴 것도 다 보이게
 @Composable
 private fun CategoriesPreview() {
     PlaySoptTheme {
         Categories(
-            categories = listOf("전체", "상의", "팬츠", "원피스"),
+            categories = listOf("전체", "상의", "팬츠", "원피스", "아우터", "스커트", "슈즈", "가방", "이너웨어/잠옷", "폰꾸미기"),
             selectedIndex = 0,
             onCategoryClick = {},
         )
