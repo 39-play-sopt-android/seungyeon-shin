@@ -16,8 +16,6 @@ import org.sopt.play.data.dto.PostRequest
 import org.sopt.play.data.dto.PostResponse
 import retrofit2.HttpException
 
-private const val AUTHOR = "승연"
-
 class PostViewModel : ViewModel() {
     private val postService = RetrofitClient.postService
 
@@ -34,12 +32,10 @@ class PostViewModel : ViewModel() {
 
     fun getPosts() {
         viewModelScope.launch {
-            runCatching { postService.getPosts() }
-                .onSuccess { response ->
-                    val posts = response.data?.posts.orEmpty().map { it.toPost() }
-                    _uiState.update { it.copy(posts = posts) }
-                }
-                .onFailure { _toastMessage.emit("목록을 불러오지 못했어요") }
+            runCatching { postService.getPosts() }.onSuccess { response ->
+                val posts = response.data?.posts.orEmpty().map { it.toPost() }
+                _uiState.update { it.copy(posts = posts) }
+            }.onFailure { _toastMessage.emit("목록을 불러오지 못했어요") }
         }
     }
 
@@ -51,12 +47,12 @@ class PostViewModel : ViewModel() {
         _uiState.update { it.copy(isBottomSheetVisible = false) }
     }
 
-    fun createPost(title: String, content: String) {
+    fun createPost(title: String, content: String, author: String) {
         viewModelScope.launch {
             runCatching {
                 postService.postPost(
                     authorizationCode = getAuthorizationCode(),
-                    request = PostRequest(title = title, content = content, author = AUTHOR),
+                    request = PostRequest(title = title, content = content, author = author),
                 )
             }.onSuccess {
                 _uiState.update { it.copy(isBottomSheetVisible = false) }

@@ -23,7 +23,7 @@ import org.sopt.play.ui.component.PlayTextField
 
 @Composable
 fun RegisterRoute(
-    onRegisterClick: (email: String, password: String) -> Unit,
+    onRegisterClick: (name: String, email: String, password: String) -> Unit,
     viewModel: RegisterViewModel = viewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -50,7 +50,7 @@ fun RegisterScreen(
     onEmailChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
     onPasswordConfirmChange: (String) -> Unit,
-    onRegisterClick: (email: String, password: String) -> Unit,
+    onRegisterClick: (name: String, email: String, password: String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
 
@@ -117,7 +117,7 @@ fun RegisterScreen(
         PlayButton(
             text = "회원가입",
             enabled = name.isNotBlank() && isEmailValid && isPasswordValid && isPasswordMatch,
-            onClick = { onRegisterClick(email, password) },
+            onClick = { onRegisterClick(name, email, password) },
         )
     }
 }
@@ -135,6 +135,6 @@ private fun RegisterScreenPreview() {
             onEmailChange = {},
             onPasswordChange = {},
             onPasswordConfirmChange = {},
-            onRegisterClick = { _, _ -> })
+            onRegisterClick = { _, _, _ -> })
     }
 }

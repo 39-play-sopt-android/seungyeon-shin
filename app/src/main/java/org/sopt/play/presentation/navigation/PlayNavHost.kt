@@ -25,6 +25,7 @@ fun PlayNavHost(modifier: Modifier = Modifier) {
     // 회원가입 정보: registerForActivityResult 대신 NavHost에서 상태로 보관
     var registeredEmail by remember { mutableStateOf("") }
     var registeredPassword by remember { mutableStateOf("") }
+    var registeredName by remember { mutableStateOf("") }
 
     NavHost(
         navController = navController,
@@ -48,7 +49,8 @@ fun PlayNavHost(modifier: Modifier = Modifier) {
         }
         composable(Route.REGISTER) {
             RegisterRoute(
-                onRegisterClick = { email, password ->
+                onRegisterClick = { name, email, password ->
+                    registeredName = name
                     registeredEmail = email
                     registeredPassword = password
                     navController.popBackStack() // 회원가입 화면 닫기 (기존 finish() 역할),
@@ -61,7 +63,7 @@ fun PlayNavHost(modifier: Modifier = Modifier) {
             )
         }
         composable(Route.POST) {
-            PostRoute()
+            PostRoute(author = registeredName)
         }
     }
 }

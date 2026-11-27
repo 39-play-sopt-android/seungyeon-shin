@@ -32,7 +32,9 @@ import org.sopt.play.ui.component.PlayFloatingButton
 import org.sopt.play.ui.component.PlaySearchTextField
 
 @Composable
-fun PostRoute(viewModel: PostViewModel = viewModel()) {
+fun PostRoute(
+    author: String, viewModel: PostViewModel = viewModel()
+) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val context = LocalContext.current
 
@@ -52,7 +54,7 @@ fun PostRoute(viewModel: PostViewModel = viewModel()) {
     if (uiState.isBottomSheetVisible) {
         PostBottomSheet(
             onDismiss = viewModel::onBottomSheetDismiss,
-            onCompleteClick = viewModel::createPost,
+            onCompleteClick = { title, content -> viewModel.createPost(title, content, author) },
         )
     }
 
