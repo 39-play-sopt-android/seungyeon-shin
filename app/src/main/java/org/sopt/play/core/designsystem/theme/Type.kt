@@ -1,4 +1,4 @@
-package org.sopt.play.ui.theme
+package org.sopt.play.core.designsystem.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
@@ -65,4 +65,20 @@ val sb14 = TextStyle(
     fontWeight = FontWeight.SemiBold,
 )
 
+val m12 = TextStyle(
+    fontFamily = Pretendard,
+    fontSize = 12.sp,
+    lineHeight = 1.2.em,
+    letterSpacing = (-0.01).em,
+    fontWeight = FontWeight.Medium,
+)
+
+val m16 = TextStyle(
+    fontFamily = Pretendard,
+    fontSize = 16.sp,
+    lineHeight = 1.2.em,
+    letterSpacing = (-0.01).em,
+    fontWeight = FontWeight.Medium,
+)
 val Typography = Typography()
+

@@ -15,10 +15,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color // android.graphics.Color 아님!! compose 쪽 Color 써야 Transparent 있음
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import org.sopt.play.ui.theme.Black
-import org.sopt.play.ui.theme.Gray3
-import org.sopt.play.ui.theme.PlaySoptTheme
-import org.sopt.play.ui.theme.m18
+import org.sopt.play.core.designsystem.theme.Black
+import org.sopt.play.core.designsystem.theme.Gray3
+import org.sopt.play.core.designsystem.theme.PlaySoptTheme
+import org.sopt.play.core.designsystem.theme.m18
 import org.sopt.play.util.noRippleClickable
 
 /*

@@ -13,6 +13,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import org.sopt.play.presentation.home.HomeRoute
 import org.sopt.play.presentation.login.LoginRoute
+import org.sopt.play.presentation.post.PostRoute
 import org.sopt.play.presentation.register.RegisterRoute
 
 @Composable
@@ -24,6 +25,7 @@ fun PlayNavHost(modifier: Modifier = Modifier) {
     // 회원가입 정보: registerForActivityResult 대신 NavHost에서 상태로 보관
     var registeredEmail by remember { mutableStateOf("") }
     var registeredPassword by remember { mutableStateOf("") }
+    var registeredName by remember { mutableStateOf("") }
 
     NavHost(
         navController = navController,
@@ -47,7 +49,8 @@ fun PlayNavHost(modifier: Modifier = Modifier) {
         }
         composable(Route.REGISTER) {
             RegisterRoute(
-                onRegisterClick = { name, email, password, passwordConfirm ->
+                onRegisterClick = { name, email, password ->
+                    registeredName = name
                     registeredEmail = email
                     registeredPassword = password
                     navController.popBackStack() // 회원가입 화면 닫기 (기존 finish() 역할),
@@ -55,7 +58,12 @@ fun PlayNavHost(modifier: Modifier = Modifier) {
             )
         }
         composable(Route.HOME) {
-            HomeRoute()
+            HomeRoute(
+                onSearchClick = { navController.navigate(Route.POST) },
+            )
+        }
+        composable(Route.POST) {
+            PostRoute(author = registeredName)
         }
     }
 }

@@ -5,6 +5,7 @@ import org.sopt.play.R
 
 // 상품 하나에 필요한 정보 묶음 -> data class (2차 세미나 "data class" 부분)
 data class Product(
+    val id: Long, //index가 아닌 안 바뀌는 id!!
     val storeName: String,
     val productName: String,
     val discountRate: String,
@@ -28,6 +29,7 @@ val homeBanners = listOf(
 // 이미지는 drawable에 넣은 거 R.drawable.이름 으로 연결 (파일명은 소문자/숫자/_ 만 됨)
 val homeProducts = listOf(
     Product(
+        id = 1L,
         storeName = "트랜디어패럴",
         productName = "[카프리1위🏆/5부,7부,9부기장/MADE] 클립 스판 슬릿 바이커 카프리 데님 팬츠",
         discountRate = "36%",
@@ -36,6 +38,7 @@ val homeProducts = listOf(
         isFavorite = false,
     ),
     Product(
+        id = 2L,
         storeName = "슬로우앤드",
         productName = "[🍁가을/3기장선택!] made. 모먼트 투커버 올데이슬랙스 (+숏/베이직/롱ver) - 4 size",
         discountRate = "50%",
@@ -44,6 +47,7 @@ val homeProducts = listOf(
         isFavorite = true,
     ),
     Product(
+        id = 3L,
         storeName = "어텀",
         productName = "보울7부티셔츠",
         discountRate = "10%",
@@ -52,6 +56,7 @@ val homeProducts = listOf(
         isFavorite = false,
     ),
     Product(
+        id = 4L,
         storeName = "슬로우앤드",
         productName = "[오픈할인중] made. 도브 클래식 탄탄핏 무지셔츠 - 4 color",
         discountRate = "40%",

@@ -5,14 +5,12 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import org.sopt.play.core.designsystem.theme.PlaySoptTheme
 import org.sopt.play.presentation.navigation.PlayNavHost
-import org.sopt.play.ui.theme.PlaySoptTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,7 +18,11 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             PlaySoptTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                Scaffold(
+                    modifier = Modifier
+                        .imePadding()
+                        .fillMaxSize()
+                ) { innerPadding ->
                     PlayNavHost(
                         modifier = Modifier.padding(innerPadding),
                     )
