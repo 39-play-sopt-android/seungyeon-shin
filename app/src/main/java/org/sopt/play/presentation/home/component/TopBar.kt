@@ -19,18 +19,20 @@ import org.sopt.play.core.designsystem.theme.Black
 import org.sopt.play.core.designsystem.theme.PlaySoptTheme
 import org.sopt.play.core.designsystem.theme.White
 import org.sopt.play.core.designsystem.theme.b28
+import org.sopt.play.util.noRippleClickable
 
 // 왼쪽 로고 + 오른쪽 검색 아이콘 가로로 나란히 -> Row
 // 클릭이나 선택 상태 없어서 파라미터는 modifier 하나
 @Composable
 fun TopBar(
+    onSearchClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
             .background(White)
-            .padding(start = 16.dp, end=6.dp),
+            .padding(start = 16.dp, end = 6.dp),
         horizontalArrangement = Arrangement.SpaceBetween, // 양 끝으로 벌리기
         verticalAlignment = Alignment.CenterVertically, // 글자랑 아이콘 높이 달라서 세로 가운데 맞춤
     ) {
@@ -41,6 +43,7 @@ fun TopBar(
             contentDescription = "검색",
             tint = Black,
             modifier = Modifier
+                .noRippleClickable(onClick = onSearchClick)
                 .padding(10.dp)
                 .size(28.dp),
         )
@@ -51,6 +54,6 @@ fun TopBar(
 @Composable
 private fun TopBarPreview() {
     PlaySoptTheme {
-        TopBar()
+        TopBar(onSearchClick = {})
     }
 }

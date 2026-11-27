@@ -36,13 +36,16 @@ import org.sopt.play.presentation.home.component.ProductCard
 import org.sopt.play.presentation.home.component.TopBar
 
 @Composable
-fun HomeRoute(viewModel: HomeViewModel = viewModel()) {
+fun HomeRoute(
+    onSearchClick: () -> Unit, viewModel: HomeViewModel = viewModel()
+) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     HomeScreen(
         uiState = uiState,
         onMenuClick = viewModel::onMenuClick,
         onCategoryClick = viewModel::onCategoryClick,
         onFavoriteClick = viewModel::onFavoriteClick,
+        onSearchClick = onSearchClick,
     )
 }
 
@@ -53,12 +56,13 @@ fun HomeScreen(
     onMenuClick: (Int) -> Unit = {},
     onCategoryClick: (Int) -> Unit = {},
     onFavoriteClick: (Long) -> Unit = {},
+    onSearchClick: () -> Unit = {},
 ) {
     // Column 대신 Scaffold -> topBar 자리에 TopBar 꽂으면 알아서 위에 고정됨 (2주차 코리 반영)
     // 나중에 bottomBar도 같은 방식으로 붙이면 됨
     Scaffold(
         modifier = modifier.fillMaxSize(),
-        topBar = { TopBar() },
+        topBar = { TopBar(onSearchClick = onSearchClick) },
         containerColor = White,
         contentWindowInsets = WindowInsets(0), // 상태바 여백은 MainActivity Scaffold가 이미 줌 -> 두 번 안 들어가게 0
     ) { innerPadding ->
