@@ -28,6 +28,7 @@ fun RegisterRoute(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     RegisterScreen(
+        name = uiState.name,
         email = uiState.email,
         password = uiState.password,
         passwordConfirm = uiState.passwordConfirm,
