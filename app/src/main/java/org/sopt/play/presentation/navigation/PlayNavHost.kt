@@ -13,6 +13,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import org.sopt.play.presentation.home.HomeRoute
 import org.sopt.play.presentation.login.LoginRoute
+import org.sopt.play.presentation.post.PostRoute
 import org.sopt.play.presentation.register.RegisterRoute
 
 @Composable
@@ -55,7 +56,12 @@ fun PlayNavHost(modifier: Modifier = Modifier) {
             )
         }
         composable(Route.HOME) {
-            HomeRoute()
+            HomeRoute(
+                onSearchClick = { navController.navigate(Route.POST) },
+            )
+        }
+        composable(Route.POST) {
+            PostRoute()
         }
     }
 }
